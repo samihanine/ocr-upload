@@ -57,7 +57,7 @@ const FileUploadForm = () => {
         responseType: "blob", // important for handling binary data
       });
 
-      handleDownload(result.data, "processed_files.zip");
+      setImages([]);
       console.log("Files uploaded and downloaded successfully");
     } catch (error) {
       console.error("Error:", error);

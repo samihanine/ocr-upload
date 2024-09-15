@@ -47,12 +47,6 @@ export const buildHtmlTemplate = (props: {
                   </table>
               </td>
           </tr>
-          <tr>
-              <td align="center" style="font-size: 12px; color: #D10005; padding-top: 20px;">
-                  Fire Terminator | 2620 Bd Pie-IX, Montréal, QC H1V 2E7<br>
-                  Email: jetfire@fireterminator.ca | Tel: +1 (514) 588-6944
-              </td>
-          </tr>
       </table>
   </body>
   </html>`;
@@ -61,16 +55,12 @@ export const buildHtmlTemplate = (props: {
 export const sendEmail = async (props: {
   to: string;
   subject: string;
-  title?: string;
   text: string;
-  actionUrl?: string;
-  actionText?: string;
 }) => {
+  console.log("ok");
   const html = await buildHtmlTemplate({
-    title: props.title || props.subject,
+    title: props.subject,
     content: props.text,
-    actionUrl: props.actionUrl,
-    actionText: props.actionText,
   });
 
   const result = await resend.emails.send({
@@ -83,4 +73,6 @@ export const sendEmail = async (props: {
   if (result.error) {
     throw new Error(result.error.message);
   }
+
+  console.log(result);
 };
