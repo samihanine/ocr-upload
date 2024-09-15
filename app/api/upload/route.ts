@@ -14,7 +14,8 @@ const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
 const REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN;
-const RECIPIENT_EMAIL = "sami.hanine22@gmail.com";
+const RECIPIENT_EMAIL =
+  process.env.RECIPIENT_EMAIL || "sami.hanine22@gmail.com";
 
 const googleAuth = new google.auth.OAuth2(
   CLIENT_ID,
@@ -27,13 +28,8 @@ const drive = google.drive({ version: "v3", auth: googleAuth });
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const fileLink = await processDocument(formData);
 
-    await sendEmail({
-      to: RECIPIENT_EMAIL,
-      subject: "Fichiers traités",
-      text: `Veuillez trouver ici le lien pour télécharger les fichiers traités : ${fileLink}`,
-    });
+    await processDocument(formData);
 
     return NextResponse.json({ success: true });
   } catch (e) {
@@ -122,5 +118,9 @@ async function processDocument(formData: FormData) {
   const fileLink = `https://drive.google.com/uc?id=${file.data.id}&export=download`;
 
   console.log(`Files processed and uploaded to Google Drive: ${fileLink}`);
-  return fileLink;
+  await sendEmail({
+    to: RECIPIENT_EMAIL,
+    subject: "Fichiers traités",
+    text: `Veuillez trouver ici le lien pour télécharger les fichiers traités : ${fileLink}`,
+  });
 }
