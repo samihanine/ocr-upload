@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Fire Terminator Server",
-  description: "Fire Terminator Server",
+  title: "OCR Server",
+  description: "OCR Server",
 };
 
 export default async function RootLayout({

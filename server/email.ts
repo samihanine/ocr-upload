@@ -22,7 +22,7 @@ export const buildHtmlTemplate = (props: {
               <td align="center">
                   <table width="600px" cellspacing="0" cellpadding="20" style="background-color: #ffffff; border-radius: 20px">
                       <tr>
-                          <td align="center" style="font-size: 24px; font-weight: bold; color: #D10005;">
+                          <td align="center" style="font-size: 24px; font-weight: bold; color: #33A852;">
                               ${props.title}
                           </td>
                       </tr>
@@ -64,7 +64,7 @@ export const sendEmail = async (props: {
   });
 
   const result = await resend.emails.send({
-    from: `Fire Terminator <${resendFromEmail}>`,
+    from: `Otopio <${resendFromEmail}>`,
     to: props.to,
     subject: props.subject,
     html,
