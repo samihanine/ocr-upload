@@ -10,6 +10,7 @@ const CustomFileSelector = (props: Props) => {
     <input
       {...props}
       type="file"
+      accept="pdf"
       multiple
       className={classNames({
         "file:bg-gray-50 file:text-gray-500 hover:file:bg-gray-100": true,
@@ -68,33 +69,37 @@ const FileUploadForm = () => {
 
   return (
     <form className="w-full" onSubmit={handleSubmit}>
-      <div className="flex justify-center gap-10">
+      <div className="flex justify-center flex-col items-start gap-10">
+        <h1 className="text-2xl font-semibold">
+          Convertir des fichiers PDF en XLSX
+        </h1>
         <CustomFileSelector onChange={handleFileSelected} />
+
+        {images.length > 0 && (
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold">Fichiers séléctionnés</h2>
+            <ul className="mt-2">
+              {images.map((image, i) => (
+                <li key={i}>{image.name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <button
           type="submit"
           className={classNames({
-            "bg-gray-500 text-white hover:bg-gray-100 px-4 py-2 rounded-md":
+            "bg-gray-500 text-white hover:bg-gray-800 px-4 py-2 rounded-md":
               true,
             "disabled:pointer-events-none opacity-40": uploading,
           })}
           disabled={uploading}
         >
-          Upload
+          Convertir
         </button>
+
+        {uploading && <p>Chargement...</p>}
       </div>
-
-      {images.length > 0 && (
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold">Selected Files</h2>
-          <ul className="mt-2">
-            {images.map((image, i) => (
-              <li key={i}>{image.name}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {uploading && <p>Uploading...</p>}
     </form>
   );
 };
