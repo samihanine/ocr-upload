@@ -29,7 +29,7 @@ export async function POST(req: Request) {
   try {
     const formData = await req.formData();
 
-    await processDocument(formData);
+    processDocument(formData);
 
     return NextResponse.json({ success: true });
   } catch (e) {
