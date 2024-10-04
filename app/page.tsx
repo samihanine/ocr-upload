@@ -33,16 +33,6 @@ const FileUploadForm = () => {
     }
   };
 
-  const handleDownload = (data: Blob, filename: string) => {
-    const url = window.URL.createObjectURL(data);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", filename);
-    document.body.appendChild(link);
-    link.click();
-    link.parentNode?.removeChild(link);
-  };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -54,10 +44,11 @@ const FileUploadForm = () => {
     setUploading(true);
 
     try {
-      const result = await axios.post("/api/upload", formData, {
-        responseType: "blob", // important for handling binary data
+      await axios.post("/api/upload", formData, {
+        responseType: "blob",
       });
 
+      e.currentTarget.reset();
       setImages([]);
       console.log("Files uploaded and downloaded successfully");
     } catch (error) {
